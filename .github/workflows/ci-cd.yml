@@ -15,8 +15,9 @@ jobs:
       postgres:
         image: postgres:14
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+          # Using environment variables for database credentials
+          POSTGRES_USER: ${{ vars.TEST_DB_USER || 'postgres' }}
+          POSTGRES_PASSWORD: ${{ vars.TEST_DB_PASSWORD || 'postgres' }} # pragma: allowlist secret
           POSTGRES_DB: test_db
         ports:
           - 5432:5432
@@ -48,18 +49,39 @@ jobs:
           # exit-zero treats all errors as warnings
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-      - name: Set up Python path
+      - name: Set up Python path and environment # pragma: allowlist secret
         run: |
           echo "PYTHONPATH=$PYTHONPATH:$(pwd)" >> $GITHUB_ENV
           echo "Current directory: $(pwd)"
           echo "Directory contents: $(ls -la)"
+          # Create a testing config file with a placeholder secret key
+          cat > testing_config.py << EOF
+          # Database connection string for testing
+          SQLALCHEMY_DATABASE_URI = 'postgresql://${{ vars.TEST_DB_USER || 'postgres' }}:${{ vars.TEST_DB_PASSWORD || 'postgres' }}@localhost:5432/test_db'
+          # Test secret key (not for production)
+          SECRET_KEY = 'ci_test_key_not_for_production' # pragma: allowlist secret
+          TESTING = True
+          WTF_CSRF_ENABLED = False
+          EOF
+
+      - name: Initialize database
+        env:
+          # Using environment variables for database connection
+          DATABASE_URL: postgresql://${{ vars.TEST_DB_USER || 'postgres' }}:${{ vars.TEST_DB_PASSWORD || 'postgres' }}@localhost:5432/test_db
+          SECRET_KEY: ci_test_key_not_for_production # pragma: allowlist secret
+          FLASK_APP: run.py
+          FLASK_ENV: testing
+        run: |
+          python -c "from capstone_blog import create_app, db; app = create_app('testing'); app.app_context().push(); db.create_all()"
 
       - name: Test with pytest
         env:
-          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          # Using environment variables for database connection
+          DATABASE_URL: postgresql://${{ vars.TEST_DB_USER || 'postgres' }}:${{ vars.TEST_DB_PASSWORD || 'postgres' }}@localhost:5432/test_db
+          SECRET_KEY: ci_test_key_not_for_production # pragma: allowlist secret
           FLASK_APP: run.py
           FLASK_ENV: testing
+          PYTHONPATH: ${{ github.workspace }}
         run: |
           python -c "import sys; print(sys.path)"
           python -c "import os; print(os.getcwd()); print(os.listdir('.'))"

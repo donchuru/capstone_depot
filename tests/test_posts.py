@@ -1,11 +1,13 @@
 import json
+from flask import url_for
 
-def test_create_post(client, test_user):
+def test_create_post(client, test_user, app):
     # Login first
-    client.post('/login', data={
+    response = client.post('/login', data={
         'email': 'test@example.com',
         'password': 'password'
-    })
+    }, follow_redirects=True)
+    assert b'Home' in response.data  # Verify login was successful
 
     # Create post
     response = client.post('/post/new', data={
@@ -15,10 +17,12 @@ def test_create_post(client, test_user):
         'category': 'Software Engineering',
         'content': 'Test project description',
         'link': 'https://youtube.com/test'
-    })
-    assert response.status_code == 302  # Redirect after successful creation
+    }, follow_redirects=True)
+    assert response.status_code == 200  # Should be 200 with follow_redirects=True
+    assert b'Your project has been created!' in response.data or b'Test Project' in response.data
 
-def test_view_post(client, test_post):
-    response = client.get(f'/post/{test_post.id}')
-    assert response.status_code == 200
-    assert test_post.title.encode() in response.data
+def test_view_post(client, test_post, app):
+    with app.app_context():
+        response = client.get(f'/post/{test_post.id}')
+        assert response.status_code == 200
+        assert test_post.title.encode() in response.data

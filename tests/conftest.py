@@ -1,5 +1,5 @@
 import pytest
-from capstone_blog import create_app, db
+from capstone_blog import create_app, db, bcrypt
 from capstone_blog.models import User, Post
 import json
 
@@ -23,31 +23,51 @@ def runner(app):
 
 @pytest.fixture
 def test_user(app):
-    user = User(
-        username='testuser',
-        email='test@example.com',
-        password='password'
-    )
     with app.app_context():
+        hashed_password = bcrypt.generate_password_hash('password').decode('utf-8')
+        user = User(
+            username='testuser',
+            email='test@example.com',
+            password=hashed_password
+        )
         db.session.add(user)
         db.session.commit()
-    return user
+
+        # Get a fresh instance from the database to ensure it's attached to the session
+        user_id = user.id
+        user = User.query.get(user_id)
+        yield user
+
+        # Clean up
+        db.session.delete(user)
+        db.session.commit()
 
 @pytest.fixture
 def test_post(app, test_user):
-    post = Post(
-        title='Test Project',
-        year=2024,
-        team_members=json.dumps([
-            {'name': 'Test User', 'linkedin_url': 'https://linkedin.com/test'}
-        ]),
-        category='Software Engineering',
-        content='Test project description',
-        link='https://youtube.com/test',
-        poster='https://example.com/test.jpg',
-        user_id=test_user.id
-    )
     with app.app_context():
+        # Get a fresh user instance to ensure it's attached to the session
+        user = User.query.get(test_user.id)
+
+        post = Post(
+            title='Test Project',
+            year=2024,
+            team_members=json.dumps([
+                {'name': 'Test User', 'linkedin_url': 'https://linkedin.com/test'}
+            ]),
+            category='Software Engineering',
+            content='Test project description',
+            link='https://youtube.com/test',
+            poster='https://example.com/test.jpg',
+            user_id=user.id
+        )
         db.session.add(post)
         db.session.commit()
-    return post
+
+        # Get a fresh instance from the database
+        post_id = post.id
+        post = Post.query.get(post_id)
+        yield post
+
+        # Clean up
+        db.session.delete(post)
+        db.session.commit()
