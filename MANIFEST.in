@@ -1,0 +1,5 @@
+include capstone_blog/static/*
+include capstone_blog/templates/*
+include capstone_blog/templates/**/*
+include migrations/*
+include migrations/**/* 
