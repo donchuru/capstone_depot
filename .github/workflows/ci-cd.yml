@@ -78,7 +78,8 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: "capstone-depot"
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
-          procfile: "web: gunicorn capstone_depot:create_app('production')"
+          # Using the Procfile in the repository instead of overriding it
+          # This ensures we use the correct command: gunicorn wsgi:app
 
       - name: Run database migrations
         env:
