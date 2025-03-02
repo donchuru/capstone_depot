@@ -26,8 +26,7 @@ def test_create_post(client, test_user, app, mock_cloudinary):
     assert response.status_code == 200  # Should be 200 with follow_redirects=True
     assert b'Your project has been created!' in response.data or b'Test Project' in response.data
 
-def test_view_post(client, test_post, app):
-    with app.app_context():
-        response = client.get(f'/post/{test_post.id}')
-        assert response.status_code == 200
-        assert test_post.title.encode() in response.data
+def test_view_post(client, test_post):
+    response = client.get(f'/post/{test_post.id}')
+    assert response.status_code == 200
+    assert test_post.title.encode() in response.data

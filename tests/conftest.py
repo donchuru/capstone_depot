@@ -11,6 +11,7 @@ def app():
     with app.app_context():
         db.create_all()
         yield app
+        # Drop all tables after tests instead of trying to delete individual records
         db.session.remove()
         db.drop_all()
 
@@ -40,22 +41,11 @@ def test_user(app):
         )
         db.session.add(user)
         db.session.commit()
-
-        # Get a fresh instance from the database to ensure it's attached to the session
-        user_id = user.id
-        user = User.query.get(user_id)
-        yield user
-
-        # Clean up
-        db.session.delete(user)
-        db.session.commit()
+        return user
 
 @pytest.fixture
 def test_post(app, test_user):
     with app.app_context():
-        # Get a fresh user instance to ensure it's attached to the session
-        user = User.query.get(test_user.id)
-
         post = Post(
             title='Test Project',
             year=2024,
@@ -66,16 +56,8 @@ def test_post(app, test_user):
             content='Test project description',
             link='https://youtube.com/test',
             poster='https://example.com/test.jpg',
-            user_id=user.id
+            user_id=test_user.id
         )
         db.session.add(post)
         db.session.commit()
-
-        # Get a fresh instance from the database
-        post_id = post.id
-        post = Post.query.get(post_id)
-        yield post
-
-        # Clean up
-        db.session.delete(post)
-        db.session.commit()
+        return post

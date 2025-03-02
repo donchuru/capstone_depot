@@ -1,7 +1,3 @@
-"""
-Following through Corey Schafer's Flask Tutorial on YT
-"""
-
 # will import from the __init__.py file
 from capstone_blog import create_app, db
 from capstone_blog.mock_data import add_mock_data
