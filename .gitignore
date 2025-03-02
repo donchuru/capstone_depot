@@ -1,5 +1,4 @@
 in/
-migrations/
 **/.env
 *.db
 .pytest_cache/
