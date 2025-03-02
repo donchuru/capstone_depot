@@ -36,6 +36,7 @@ def new_post():
      # validate_on_submit() will validate the format of the form and make sure the user fills in the right fields before saving their changes to the database
      if form.validate_on_submit():
           # Preprocessing to get poster url in database table
+          poster_url = None  # Default to None if no poster is provided
           if form.poster.data:  # Check if a file was uploaded for the poster field
                poster_url = save_poster(form.poster.data)  # Assign the saved file path to poster_file
                print(poster_url)

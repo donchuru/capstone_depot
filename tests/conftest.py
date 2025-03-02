@@ -2,6 +2,7 @@ import pytest
 from capstone_blog import create_app, db, bcrypt
 from capstone_blog.models import User, Post
 import json
+from unittest.mock import patch
 
 @pytest.fixture
 def app():
@@ -20,6 +21,13 @@ def client(app):
 @pytest.fixture
 def runner(app):
     return app.test_cli_runner()
+
+@pytest.fixture
+def mock_cloudinary():
+    """Mock the Cloudinary uploader to avoid actual uploads during tests"""
+    with patch('cloudinary.uploader.upload') as mock_upload:
+        mock_upload.return_value = {'secure_url': 'https://example.com/test_image.jpg'}
+        yield mock_upload
 
 @pytest.fixture
 def test_user(app):
