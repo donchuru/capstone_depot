@@ -1,0 +1,139 @@
+<!--this is what is shared between the different pages(html files)-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <!--Adding Bootstrap-->
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href= "{{ url_for('static', filename='main.css') }}">
+
+    
+    <!-- Other head elements -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+
+    <!-- adding favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/png">
+    <link rel="manifest" href="/static/favicon/site.webmanifest">
+
+    
+    <!-- adding Google Analytics -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RT1S6D1EDD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-RT1S6D1EDD');
+    </script>
+    
+    
+    {% if title %}
+        <title> Capstone Depot - {{ title }}</title>
+    {% else %}
+        <title> Capstone Depot | A shared repository for capstone projects. Please contribute yours! </title>
+    {% endif %}
+</head>
+
+<body> 
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+          <div class="container">
+
+            <a class="navbar-brand me-3" href="/"><i class="fa fa-archive" aria-hidden="true"></i>
+              Capstone Depot</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarToggle">
+              <div class="navbar-nav">
+                <a class="nav-item nav-link" href="{{ url_for('main.home') }}"><i class="fa fa-home" aria-hidden="true"></i>
+                  Home</a>
+                <!-- <a class="nav-item nav-link" href="{{ url_for('main.about') }}">About</a> -->
+              </div>
+
+              <!-- Navbar Right Side -->
+              <div class="navbar-nav ms-auto">
+                {% if current_user.is_authenticated %}
+
+                  <a class="nav-item nav-link me-3" href="{{ url_for('posts.new_post') }}"><i class="fa fa-plus" aria-hidden="true"> </i> Upload Project
+                  </a>
+
+                  <a class="nav-item nav-link me-3" href="{{ url_for('users.account') }}"> <i class="fa fa-user" aria-hidden="true"></i> My Account
+                  </a>
+
+                  <a class="nav-item nav-link" href="{{ url_for('users.logout') }}"> <i class="fa fa-sign-out" aria-hidden="true"></i>
+                    Sign Out
+                  </a>
+
+                {% else %}
+                  <a class="nav-item nav-link me-3" href="{{ url_for('main.about') }}"> <i class="fa fa-file-text" aria-hidden="true"></i> About</a>
+
+                  <a class="nav-item nav-link me-3" href="{{ url_for('users.login') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
+
+                  <a class="nav-item nav-link me-3" href="{{ url_for('users.register') }}"> <i class="fa fa-user-plus" aria-hidden="true"></i> Sign Up</a>
+
+                {% endif %}
+              </div>
+            </div>
+            
+          </div>
+        </nav>
+    </header>
+
+    <main role="main" class="container">
+        <div class="row">
+            <div>
+              {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                  {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                      {{ message }}
+                    </div>
+                  {% endfor %}
+                {% endif %}
+              {% endwith %}
+
+              {% block content %}{% endblock %}
+              
+            </div>
+        </div>
+    </main>
+
+    <!-- Remove the container if you want to extend the Footer to full width. -->
+
+    <footer class="text-center text-white border-top container mt-5">
+      
+          <p class="d-flex justify-content-center align-items-center">
+            <span class="me-3 mt-3"><a class="categories" href="mailto://capstonedepot@gmail.com?subject=Bug Spotted:"><i class="fa fa-bug" aria-hidden="true"></i>
+              Spotted a bug? Report an issue</a> </span>
+            <!-- <button type="button" class="btn btn-outline-light btn-rounded">
+              Sign up!
+            </button> -->
+          </p>
+
+          <div class="mt-2 mb-4">
+            <a href="{{ url_for('main.about') }}" class="categories"> About Page </a>
+          </div>
+
+      <!-- Copyright -->
+      <div class="text-center mb-4">
+        © 2023 Copyright
+      </div>
+      <!-- Copyright -->
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

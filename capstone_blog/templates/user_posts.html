@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block content %}
+
+    <h1 class="mb-3"> Posts by {{ user.username }} ({{ posts.total }})</h1>
+
+    {% for post in posts.items %}
+    <div class="border m-4 rounded-3">
+        <div class="d-flex m-3">
+            
+            <div class="flex-grow-1 ms-3">
+                
+                <div class="article-metadata">
+
+                    <a class="mr-2 username" href="{{ url_for('users.user_posts', username=post.author.username) }}">{{ post.author.username }}</a>
+
+                    <small class="text-muted"> <i class="fa fa-snowflake-o" aria-hidden="true"></i> {{ post.year }}</small>
+                </div>
+
+                <h2><a class="article-title" href="{{ url_for('posts.post', post_id=post.id) }}">{{ post.title }}</a></h2>
+
+                <p class="article-content"><strong>Team Members:</strong> {{ post.team_members }}</p>
+
+                <div class="mt-3 mb-3">
+                    <!-- clickable poster image -->
+                    {% if post.poster %}
+                        <a href="{{ post.poster }}" target="_blank">
+                            <img class="img-fluid" style="max-width:90%" src="{{ post.poster }}">
+                        </a>
+                    {% endif %}
+                </div>
+
+                <!-- <p class="article-content">{{ post.content }}</p> -->
+
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+            {% if posts.page == page_num %}
+                <a class="btn btn-dark mb-4" href="{{ url_for('users.user_posts', username=user.username, page=page_num) }}"> {{ page_num }}</a>
+            {% else %}
+                <a class="btn btn-outline-info mb-4" href="{{ url_for('users.user_posts', username=user.username, page=page_num) }}"> {{ page_num }}</a>
+            {% endif %}
+        {% else %}
+            ...
+        {% endif %}
+    
+    {% endfor %}
+
+{% endblock content %}

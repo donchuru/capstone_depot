@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container row">
+        <div class="col-md-9 mt-3">
+
+        {% if category %}
+            <h1> Projects from the Department of {{ category }} </h1>
+        {% endif %}
+
+        {% for post in posts.items %}
+            <div class="border mb-3 rounded-3">
+                <div class="d-flex m-3">
+
+                    <div class="flex-grow-1">
+                    
+                        <div class="article-metadata">
+
+                            <a class="mr-2 username" href="{{ url_for('users.user_posts', username=post.author.username) }}">{{ post.author.username }}</a>
+
+                            <small class="text-muted float-end"> <i class="fa fa-snowflake-o" aria-hidden="true"></i> {{ post.year }}</small>
+
+                        </div>
+
+                        <div>
+                            <h2><a class="article-title" href="{{ url_for('posts.post', post_id=post.id) }}">{{ post.title }}</a></h2>
+                        </div>
+
+                        <p class="article-content"><strong>Team Members:</strong> {{ post.team_members }}</p>
+
+                        <div class="mt-3 mb-3">
+                            <!-- clickable poster image -->
+                            {% if post.poster %}
+                                <a href="{{ post.poster }}" target="_blank">
+                                    <img class="img-fluid" style="max-width:90%" src="{{ post.poster }}">
+                                </a>
+                            {% endif %}
+                        </div>
+                        
+                        <p class="article-content">{{ post.content }}</p>
+
+                        
+                        <div class="d-flex flex-wrap justify-content-between align-items-center mt-3 mb-3">
+                            <h6>Discipline:<a href="{{ url_for('categories.category_posts', category=post.category) }} "><span class="badge m-2">{{ post.category }}</span> </a></h6>
+            
+                            {% if post.link %}
+                            <a class="presentationLink" target="_blank" href="{{ post.link }}">
+                                <h3 class="presentationLink"> <i class="fa fa-youtube-play" aria-hidden="true"></i> Link to Presentation </h2>
+                            </a>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+        
+        <div class="col-md-3 mt-4">
+            <div class="">
+                <h3><i class="fa fa-compass" aria-hidden="true"></i> Explore</h3>
+                <p class='text-muted'>Explore projects from other disciplines</p>
+                <ul class="list-group list-group-flush">
+                    {% for category in categories %}
+                        <li class="list-group-item"> <a class="categories" href="{{ url_for('categories.category_posts', category=category) }} "><i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                            {{ category }} </a> </li>
+                    {% endfor %} 
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+            {% if posts.page == page_num %}
+                <a class="btn btn-secondary mb-4" href="{{ url_for('main.home', page=page_num) }}"> {{ page_num }}</a>
+            {% else %}
+                <a class="btn btn-outline-secondary mb-4" href="{{ url_for('main.home', page=page_num) }}"> {{ page_num }}</a>
+            {% endif %}
+        {% else %}
+            ...
+        {% endif %}
+    
+    {% endfor %}
+
+{% endblock content %}

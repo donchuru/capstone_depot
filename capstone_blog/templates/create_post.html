@@ -1,0 +1,114 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="content-section">
+    <form method="POST" action="" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4"> {{ legend }} </legend>
+
+            <div class="form-group">
+                {{ form.title.label(class="form-control-label mb-2") }}
+
+                {% if form.title.errors %}
+                    {{ form.title(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.title.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+                    {{ form.title(class="form-control form-control-lg mb-3") }}
+                {% endif %}
+            </div>
+
+            <div class="dropdown">
+                {{ form.year.label(class="form-control-label mb-2") }}
+
+                <div>
+                    {{ form.year(class="dropdown-menu-dark mb-3") }}
+                </div>
+                
+            </div>
+
+            <div class="form-group">
+                {{ form.team_members.label(class="form-control-label mb-2 me-2") }}
+                <a data-bs-toggle="tooltip" data-bs-placement="top" title="Add a comma separated list of the names of your team members">
+                    <i class="fa fa-info-circle bg-transparent" aria-hidden="true"></i>
+                </a>
+
+                {% if form.team_members.errors %}
+                    {{ form.team_members(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.team_members.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+                    {{ form.team_members(class="form-control form-control mb-3") }}
+                {% endif %}
+            </div>
+
+            <div class="dropdown">
+                {{ form.category.label(class="form-control-label mb-2") }}
+
+                <div>
+                    {{ form.category(class="dropdown-menu-dark mb-3") }}
+                </div>
+                
+            </div>
+
+            <div class="form-group">
+                {{ form.content.label(class="form-control-label mb-2") }}
+
+                {% if form.content.errors %}
+                    {{ form.content(class="form-control form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+                    {{ form.content(class="form-control form-control form-control-textarea mb-3") }}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.link.label(class="form-control-label mb-2 me-2") }}
+                
+                <a data-bs-toggle="tooltip" data-bs-placement="top" title="Add a link to a YouTube page or Github repo with your demo">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i>
+                </a>
+
+                {{ form.link(class="form-control mb-3") }}
+            </div>
+
+            <div class="form-group">
+                {{ form.poster.label(class="form-control-label mb-2") }}
+
+                {% if form.poster.errors %}
+                    {{ form.poster(class="form-control form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.poster.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+                    {{ form.poster(class="form-control mb-3") }}
+                {% endif %}
+            </div>
+
+        </fieldset>
+
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-primary mb-3 mt-2 ") }}
+        </div>
+
+    </form>
+</div>
+
+{% endblock content %}
