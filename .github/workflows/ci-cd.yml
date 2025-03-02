@@ -60,29 +60,5 @@ jobs:
           # Run only the basic tests
           pytest -v tests/test_basic.py
 
-  deploy:
-    needs: test # Only deploy if tests pass
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push' # Only deploy on push to main
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Install Heroku CLI
-        run: |
-          curl https://cli-assets.heroku.com/install.sh | sh
-
-      - name: Deploy to Heroku
-        uses: akhileshns/heroku-deploy@v3.12.14
-        with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: "capstone-depot"
-          heroku_email: ${{ secrets.HEROKU_EMAIL }}
-          # Using the Procfile in the repository instead of overriding it
-          # This ensures we use the correct command: gunicorn wsgi:app
-
-      - name: Run database migrations
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: |
-          heroku run --app capstone-depot "flask db upgrade"
+  # Note: We've removed the deploy job since we're now using Heroku Pipeline
+  # with automatic deployments that wait for CI to pass
