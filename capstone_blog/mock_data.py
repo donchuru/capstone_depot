@@ -8,7 +8,7 @@ def add_mock_data():
         User(username='john_doe', email='john@example.com', password='password'),
         User(username='jane_doe', email='jane@example.com', password='password')
     ]
-    
+
     for user in users:
         db.session.add(user)
     db.session.commit()

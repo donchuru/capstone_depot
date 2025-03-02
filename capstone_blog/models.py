@@ -1,7 +1,7 @@
 '''
 To edit anything on the database, run the following commands in the Python shell:
 
-from capstone_blog import create_app, db 
+from capstone_blog import create_app, db
 app = create_app()
 app.app_context().push()
 
@@ -16,7 +16,7 @@ from datetime import datetime, timezone, timedelta
 # from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
 from capstone_blog import db, login_manager
-from flask_login import UserMixin 
+from flask_login import UserMixin
 
 @login_manager.user_loader  # decorator so that the function knows this is its job
 def load_user(user_id):
@@ -32,7 +32,7 @@ class User(db.Model, UserMixin):
     posts = db.relationship('Post', backref='author', lazy=True)
 
     ''' reset email and password '''
-    
+
     def get_reset_token(self, expires_sec=1800):
         # s = Serializer(app.config['SECRET_KEY'], expires_sec)
         # return s.dumps({'user_id': self.id}).decode('utf-8')
@@ -54,8 +54,8 @@ class User(db.Model, UserMixin):
         except:
             return None
         return User.query.get(user_id)
-        
-    
+
+
     # how our object is printed out
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
@@ -75,7 +75,7 @@ class Post(db.Model):
 
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
-    
+
     def get_team_members(self):
         """Return team members as a string or parse JSON if possible"""
         try:

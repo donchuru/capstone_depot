@@ -12,7 +12,7 @@
                 <div class="d-flex m-3">
 
                     <div class="flex-grow-1">
-                    
+
                         <div class="article-metadata">
 
                             <a class="mr-2 username" href="{{ url_for('users.user_posts', username=post.author.username) }}">{{ post.author.username }}</a>
@@ -35,13 +35,13 @@
                                 </a>
                             {% endif %}
                         </div>
-                        
+
                         <p class="article-content">{{ post.content }}</p>
 
-                        
+
                         <div class="d-flex flex-wrap justify-content-between align-items-center mt-3 mb-3">
                             <h6>Discipline:<a href="{{ url_for('categories.category_posts', category=post.category) }} "><span class="badge m-2">{{ post.category }}</span> </a></h6>
-            
+
                             {% if post.link %}
                             <a class="presentationLink" target="_blank" href="{{ post.link }}">
                                 <h3 class="presentationLink"> <i class="fa fa-youtube-play" aria-hidden="true"></i> Link to Presentation </h2>
@@ -54,7 +54,7 @@
             </div>
         {% endfor %}
         </div>
-        
+
         <div class="col-md-3 mt-4">
             <div class="">
                 <h3><i class="fa fa-compass" aria-hidden="true"></i> Explore</h3>
@@ -63,7 +63,7 @@
                     {% for category in categories %}
                         <li class="list-group-item"> <a class="categories" href="{{ url_for('categories.category_posts', category=category) }} "><i class="fa fa-graduation-cap" aria-hidden="true"></i>
                             {{ category }} </a> </li>
-                    {% endfor %} 
+                    {% endfor %}
                 </ul>
             </div>
         </div>
@@ -80,7 +80,7 @@
         {% else %}
             ...
         {% endif %}
-    
+
     {% endfor %}
 
 {% endblock content %}

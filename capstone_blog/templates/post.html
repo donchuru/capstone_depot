@@ -2,7 +2,7 @@
 {% block content %}
 
     <div class="d-flex m-3">
-        <div class="flex-grow-1"> 
+        <div class="flex-grow-1">
             <div class="article-metadata">
                 <a class="mr-2 username" href="{{ url_for('users.user_posts', username=post.author.username) }}">{{ post.author.username }}</a>
 
@@ -10,10 +10,10 @@
 
                 {% if post.author == current_user %}
                     <div>
-                        <a class="btn btn-secondary btn-sm mt-1 mb-1" href=" {{ url_for('posts.update_post', post_id=post.id) }}"> Update </a> 
+                        <a class="btn btn-secondary btn-sm mt-1 mb-1" href=" {{ url_for('posts.update_post', post_id=post.id) }}"> Update </a>
                     </div>
                 {% endif %}
-                
+
             </div>
 
             <h2 class="article-title">{{ post.title }}</a></h2>
@@ -28,11 +28,11 @@
                     </a>
                 {% endif %}
             </div>
-            
+
             <div class="mt-2">
                 <p class="article-content">{{ post.content }}</p>
             </div>
-            
+
             <div class="d-flex flex-wrap justify-content-between align-items-center mt-3 mb-3">
                 <h6>Tag:<a href="{{ url_for('categories.category_posts', category=post.category) }} "><span class="badge m-2">{{ post.category }}</span> </a></h6>
 
@@ -66,5 +66,5 @@
             </div>
         </div>
     </div>
-  
+
 {% endblock content %}

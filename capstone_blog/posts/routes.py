@@ -1,7 +1,7 @@
 """
 This file contains all the routes that are related to posts on Capstone Depot (https://www.capstonedepot.live/).
 
-Functionality supported around posts inculdes: 
+Functionality supported around posts inculdes:
     making a new post
     viewing a post's details
     updating a post
@@ -18,7 +18,7 @@ from capstone_blog.posts.forms import PostForm  # Web form to put in Post detail
 
 # save_poster() is a utility method to check poster format and save it to a cloud storage service (currently Cloudinary).
 # It returns a url with the link to the resource and also performs error checking
-from capstone_blog.posts.utils import save_poster 
+from capstone_blog.posts.utils import save_poster
 
 posts = Blueprint('posts', __name__)
 
@@ -76,7 +76,7 @@ def post(post_id):
 def update_post(post_id):
      """
      Route to update a project's details.
-     
+
      All the project details are queried from the database and prepopulated.
      After changes have been made, the post is updated and rendered dynamically with the Post HTML template.
      """
@@ -93,7 +93,7 @@ def update_post(post_id):
           post.team_members = form.team_members.data
           post.content = form.content.data
           post.category = form.category.data
-          
+
           # Patch for link bug. Check issue #37
           if form.link.data:
                post.link = form.link.data
@@ -106,7 +106,7 @@ def update_post(post_id):
           db.session.commit()
           flash('Your project has been updated!', 'success')
           return redirect(url_for('posts.post', post_id=post.id)) # Show user the updated post
-     
+
      # After user has pressed the update post button
      # All form fields get pre-populated by querying the post's details from the database
      elif request.method == 'GET':

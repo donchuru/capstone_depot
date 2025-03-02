@@ -6,7 +6,7 @@ def test_create_post(client, test_user):
         'email': 'test@example.com',
         'password': 'password'
     })
-    
+
     # Create post
     response = client.post('/post/new', data={
         'title': 'Test Project',
@@ -21,4 +21,4 @@ def test_create_post(client, test_user):
 def test_view_post(client, test_post):
     response = client.get(f'/post/{test_post.id}')
     assert response.status_code == 200
-    assert test_post.title.encode() in response.data 
+    assert test_post.title.encode() in response.data

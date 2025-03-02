@@ -21,7 +21,7 @@ mail = Mail()
 def create_app(config_name='default'):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
-    
+
     db.init_app(app)
     migrate.init_app(app, db)
     bcrypt.init_app(app)
@@ -29,7 +29,7 @@ def create_app(config_name='default'):
     mail.init_app(app)
 
     # Configure cloudinary
-    cloudinary.config( 
+    cloudinary.config(
         cloud_name = app.config['CLOUDINARY_CLOUD_NAME'],
         api_key = app.config['CLOUDINARY_API_KEY'],
         api_secret = app.config['CLOUDINARY_API_SECRET']

@@ -6,7 +6,7 @@ import json
 @pytest.fixture
 def app():
     app = create_app('testing')
-    
+
     with app.app_context():
         db.create_all()
         yield app
@@ -50,4 +50,4 @@ def test_post(app, test_user):
     with app.app_context():
         db.session.add(post)
         db.session.commit()
-    return post 
+    return post

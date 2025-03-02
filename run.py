@@ -29,13 +29,12 @@ if __name__ == '__main__':
     with app.app_context():
         # Create tables before running the app
         db.create_all()
-        
+
         # Check if there's any data in the database
         from capstone_blog.models import User
         if User.query.first() is None:
             print("No users found. Adding mock data...")
             add_mock_data()
             print("Mock data added successfully!")
-    
-    app.run(debug=True)
 
+    app.run(debug=True)

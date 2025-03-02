@@ -13,7 +13,7 @@ def register():
     # if user is already logged in
     if current_user.is_authenticated:
          return redirect(url_for('main.home'))
-    
+
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -30,7 +30,7 @@ def register():
 def login():
     if current_user.is_authenticated:
          return redirect(url_for('main.home'))
-    
+
     form = LoginForm()
     if form.validate_on_submit():
             user = User.query.filter_by(email=form.email.data).first()
@@ -67,7 +67,7 @@ def account():
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
-     
+
     image_file = current_user.image_file
     return render_template('account.html', title='Account', image_file=image_file, form=form)
 

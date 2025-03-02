@@ -6,9 +6,9 @@
     {% for post in posts.items %}
     <div class="border m-4 rounded-3">
         <div class="d-flex m-3">
-            
+
             <div class="flex-grow-1 ms-3">
-                
+
                 <div class="article-metadata">
 
                     <a class="mr-2 username" href="{{ url_for('users.user_posts', username=post.author.username) }}">{{ post.author.username }}</a>
@@ -46,7 +46,7 @@
         {% else %}
             ...
         {% endif %}
-    
+
     {% endfor %}
 
 {% endblock content %}

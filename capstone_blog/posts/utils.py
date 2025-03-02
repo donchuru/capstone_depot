@@ -22,9 +22,9 @@ def update_poster(form_poster, current_poster):
      f_name, f_ext = os.path.splitext(form_poster.filename)
      picture_fn = random_hex + f_ext
      new_poster_path = os.path.join(current_app.root_path, 'static/posters', picture_fn)
-     
+
      i = Image.open(form_poster)
-     
+
      os.remove(os.path.join(current_app.root_path, "static/posters/", current_poster))
 
      i.save(new_poster_path)
