@@ -1,5 +1,5 @@
 import pytest
-from capstone_blog import create_app, db
+from capstone_depot import create_app, db
 
 @pytest.fixture
 def app():

@@ -1,5 +1,5 @@
-from capstone_blog import create_app, db
-from capstone_blog.mock_data import add_mock_data
+from capstone_depot import create_app, db
+from capstone_depot.mock_data import add_mock_data
 
 app = create_app('development')
 

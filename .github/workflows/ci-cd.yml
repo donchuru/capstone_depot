@@ -78,7 +78,7 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: "capstone-depot"
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
-          procfile: "web: gunicorn capstone_blog:create_app('production')"
+          procfile: "web: gunicorn capstone_depot:create_app('production')"
 
       - name: Run database migrations
         env:

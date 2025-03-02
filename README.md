@@ -88,6 +88,107 @@ pip install pre-commit
 pre-commit install
 ```
 
+## Contributing Guide
+
+We welcome contributions to Capstone Depot! This guide will help you get started as a contributor.
+
+### Getting Started
+
+1. **Fork the Repository**: Start by forking the repository to your GitHub account.
+
+2. **Clone Your Fork**:
+
+   ```
+   git clone https://github.com/YOUR-USERNAME/capstone_depot.git
+   cd capstone_depot
+   ```
+
+3. **Set Up Development Environment**: Follow the "Local Development Setup" section above.
+
+4. **Create a Branch**:
+   ```
+   git checkout -b feature/your-feature-name
+   ```
+
+### Development Workflow
+
+1. **Make Your Changes**: Implement your feature or bug fix.
+
+2. **Write Tests**: Add tests for your changes to ensure they work as expected.
+
+   ```
+   pytest -v tests/test_your_feature.py
+   ```
+
+3. **Run Linting**: Ensure your code follows our style guidelines.
+
+   ```
+   flake8 .
+   ```
+
+4. **Commit Your Changes**: Use clear, descriptive commit messages.
+
+   ```
+   git commit -m "Add feature: brief description of what you did"
+   ```
+
+5. **Push to Your Fork**:
+
+   ```
+   git push origin feature/your-feature-name
+   ```
+
+6. **Submit a Pull Request**: Go to the original repository and create a pull request from your branch.
+
+### Pull Request Guidelines
+
+1. **Description**: Provide a detailed description of your changes.
+2. **Issue Reference**: Link to any related issues.
+3. **Tests**: Ensure all tests pass.
+4. **Documentation**: Update documentation if necessary.
+5. **Code Style**: Follow the project's coding standards.
+
+### Code Review Process
+
+1. At least one maintainer will review your PR
+2. Address any requested changes
+3. Once approved, a maintainer will merge your PR
+
+### Project Structure
+
+- `capstone_depot/` - Main application package
+  - `models/` - Database models
+  - `routes/` - Route definitions
+  - `templates/` - HTML templates
+  - `static/` - Static files (CSS, JS, images)
+- `tests/` - Test suite
+- `migrations/` - Database migrations
+
+### Testing
+
+We use pytest for testing. Run the test suite with:
+
+```
+pytest
+```
+
+For basic smoke tests only:
+
+```
+pytest -v tests/test_basic.py
+```
+
+### Reporting Bugs
+
+If you find a bug, please report it by creating an issue in the GitHub repository. Include:
+
+1. A clear, descriptive title
+2. Steps to reproduce the bug
+3. Expected behavior
+4. Actual behavior
+5. Screenshots if applicable
+6. Your environment (OS, browser, etc.)
+
 ## License
 
 [MIT License](LICENSE)

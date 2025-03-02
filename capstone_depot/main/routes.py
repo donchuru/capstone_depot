@@ -1,6 +1,6 @@
 from flask import render_template, request, Blueprint
-from capstone_blog.models import Post
-from capstone_blog.posts.forms import CATEGORIES
+from capstone_depot.models import Post
+from capstone_depot.posts.forms import CATEGORIES
 
 main = Blueprint('main', __name__)
 

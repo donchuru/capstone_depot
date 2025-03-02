@@ -1,6 +1,6 @@
 # FILE: mock_data.py
-from capstone_blog import db
-from capstone_blog.models import User, Post
+from capstone_depot import db
+from capstone_depot.models import User, Post
 
 def add_mock_data():
     # Create test users

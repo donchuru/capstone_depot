@@ -1,10 +1,10 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
-from capstone_blog import db, bcrypt
-from capstone_blog.models import User, Post
-from capstone_blog.users.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
+from capstone_depot import db, bcrypt
+from capstone_depot.models import User, Post
+from capstone_depot.users.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
                                    RequestResetForm, ResetPasswordForm)
-from capstone_blog.users.utils import save_picture, send_reset_email
+from capstone_depot.users.utils import save_picture, send_reset_email
 
 users = Blueprint('users', __name__)
 

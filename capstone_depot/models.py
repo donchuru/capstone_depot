@@ -1,7 +1,7 @@
 '''
 To edit anything on the database, run the following commands in the Python shell:
 
-from capstone_blog import create_app, db
+from capstone_depot import create_app, db
 app = create_app()
 app.app_context().push()
 
@@ -15,7 +15,7 @@ import jwt, json
 from datetime import datetime, timezone, timedelta
 # from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
-from capstone_blog import db, login_manager
+from capstone_depot import db, login_manager
 from flask_login import UserMixin
 
 @login_manager.user_loader  # decorator so that the function knows this is its job

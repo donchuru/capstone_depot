@@ -3,7 +3,7 @@ import secrets
 from PIL import Image
 from flask import url_for, current_app
 from flask_mail import Message
-from capstone_blog import mail
+from capstone_depot import mail
 import cloudinary
 
 

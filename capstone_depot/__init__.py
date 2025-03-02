@@ -4,7 +4,7 @@ from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
-from capstone_blog.config import config
+from capstone_depot.config import config
 import cloudinary
 
 db = SQLAlchemy()
@@ -35,11 +35,11 @@ def create_app(config_name='default'):
         api_secret = app.config['CLOUDINARY_API_SECRET']
     )
 
-    from capstone_blog.users.routes import users
-    from capstone_blog.posts.routes import posts
-    from capstone_blog.main.routes import main
-    from capstone_blog.errors.handlers import errors
-    from capstone_blog.categories.routes import categories
+    from capstone_depot.users.routes import users
+    from capstone_depot.posts.routes import posts
+    from capstone_depot.main.routes import main
+    from capstone_depot.errors.handlers import errors
+    from capstone_depot.categories.routes import categories
     app.register_blueprint(users)
     app.register_blueprint(posts)
     app.register_blueprint(main)

@@ -1,6 +1,6 @@
 # will import from the __init__.py file
-from capstone_blog import create_app, db
-from capstone_blog.mock_data import add_mock_data
+from capstone_depot import create_app, db
+from capstone_depot.mock_data import add_mock_data
 from flask import Flask
 
 app = create_app('development')
@@ -27,7 +27,7 @@ if __name__ == '__main__':
         db.create_all()
 
         # Check if there's any data in the database
-        from capstone_blog.models import User
+        from capstone_depot.models import User
         if User.query.first() is None:
             print("No users found. Adding mock data...")
             add_mock_data()

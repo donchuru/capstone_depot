@@ -12,13 +12,13 @@ Author: David Onchuru
 
 from flask import render_template, url_for, flash, redirect, request, abort ,Blueprint
 from flask_login import current_user, login_required
-from capstone_blog import db  # Project database
-from capstone_blog.models import Post  # Database table
-from capstone_blog.posts.forms import PostForm  # Web form to put in Post details
+from capstone_depot import db  # Project database
+from capstone_depot.models import Post  # Database table
+from capstone_depot.posts.forms import PostForm  # Web form to put in Post details
 
 # save_poster() is a utility method to check poster format and save it to a cloud storage service (currently Cloudinary).
 # It returns a url with the link to the resource and also performs error checking
-from capstone_blog.posts.utils import save_poster
+from capstone_depot.posts.utils import save_poster
 
 posts = Blueprint('posts', __name__)
 
