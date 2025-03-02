@@ -1,2 +1,2 @@
-web: gunicorn "capstone_depot:create_app('production')"
+web: gunicorn wsgi:app
 release: flask db upgrade
