@@ -6,6 +6,7 @@ from flask_login import LoginManager
 from flask_mail import Mail
 from capstone_depot.config import config
 import cloudinary
+import os
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -45,5 +46,11 @@ def create_app(config_name='default'):
     app.register_blueprint(main)
     app.register_blueprint(errors)
     app.register_blueprint(categories)
+
+    # Register Google OAuth blueprint if credentials are available
+    if os.environ.get("GOOGLE_CLIENT_ID") and os.environ.get("GOOGLE_CLIENT_SECRET"):
+        from capstone_depot.oauth import create_google_blueprint
+        google_bp = create_google_blueprint()
+        app.register_blueprint(google_bp, url_prefix="/login")
 
     return app

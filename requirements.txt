@@ -14,6 +14,12 @@ Flask-Login==0.6.3
 Flask-Mail==0.9.1
 Flask-WTF==1.2.1
 Flask-Cors==5.0.0
+Flask-Dance[sqla]==7.1.0
+
+# OAuth dependencies
+oauthlib==3.2.2
+requests-oauthlib==2.0.0
+urlobject==2.4.3
 
 # Database
 SQLAlchemy==2.0.32

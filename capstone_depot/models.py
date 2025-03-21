@@ -17,6 +17,8 @@ from datetime import datetime, timezone, timedelta
 from flask import current_app
 from capstone_depot import db, login_manager
 from flask_login import UserMixin
+from sqlalchemy.ext.mutable import MutableDict
+from sqlalchemy import JSON
 
 @login_manager.user_loader  # decorator so that the function knows this is its job
 def load_user(user_id):
@@ -28,8 +30,14 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(), nullable=False, default='https://res.cloudinary.com/dxpmu1c0z/image/upload/v1689164141/default_tu17zb.png')
-    password = db.Column(db.String(60), nullable=False)
+    password = db.Column(db.String(60), nullable=True)  # Making nullable for OAuth users
     posts = db.relationship('Post', backref='author', lazy=True)
+
+    # OAuth fields
+    oauth_provider = db.Column(db.String(20), nullable=True)  # 'google', etc.
+    oauth_id = db.Column(db.String(100), nullable=True)  # Provider's unique ID
+    oauth_token = db.Column(db.Text, nullable=True)  # OAuth token
+    oauth_data = db.Column(MutableDict.as_mutable(JSON), nullable=True)  # Additional OAuth data
 
     ''' reset email and password '''
 

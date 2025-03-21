@@ -5,9 +5,6 @@ from flask import Flask
 
 app = create_app('development')
 
-# Remove the before_first_request decorator as it's deprecated in Flask 2.3+
-# Instead, we'll use the with app.app_context() approach
-
 @app.cli.command('init-db')
 def init_db_command():
     """Clear existing data and create new tables."""
