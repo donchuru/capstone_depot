@@ -7,6 +7,7 @@ from flask_login import current_user, login_user
 from sqlalchemy.orm.exc import NoResultFound
 from capstone_depot import db
 from capstone_depot.models import User
+from capstone_depot.utils.username_generator import generate_unique_username
 import json
 
 # Create Google OAuth blueprint
@@ -50,14 +51,8 @@ def create_google_blueprint():
                     user.oauth_data = google_info
                     db.session.commit()
                 else:
-                    # Create a new user
-                    username = google_info["email"].split("@")[0]
-                    # Check if username already exists and make it unique if needed
-                    base_username = username
-                    count = 1
-                    while User.query.filter_by(username=username).first() is not None:
-                        username = f"{base_username}{count}"
-                        count += 1
+                    # Create a new user with a fun random username
+                    username = generate_unique_username(User)
 
                     user = User(
                         username=username,
