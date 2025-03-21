@@ -15,7 +15,7 @@ def create_google_blueprint():
     blueprint = make_google_blueprint(
         client_id=os.environ.get("GOOGLE_CLIENT_ID"),
         client_secret=os.environ.get("GOOGLE_CLIENT_SECRET"),
-        scope=["profile", "email"],
+        scope=["openid", "https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email"],
         storage=SQLAlchemyStorage(User, db.session, user=current_user, user_required=False),
     )
 
