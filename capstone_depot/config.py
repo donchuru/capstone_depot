@@ -26,8 +26,8 @@ class DevelopmentConfig(Config):
 
 class TestingConfig(Config):
     TESTING = True
-    # Use PostgreSQL in CI environment, SQLite locally
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///test.db'
+    # Use SQLite in-memory database for testing
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
     WTF_CSRF_ENABLED = False  # Disable CSRF tokens in testing
 
     # Mock cloudinary for testing

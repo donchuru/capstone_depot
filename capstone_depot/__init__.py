@@ -23,6 +23,9 @@ def create_app(config_name='default'):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
 
+    # Set default OAUTH_PROVIDERS to empty list
+    app.config['OAUTH_PROVIDERS'] = []
+
     db.init_app(app)
     migrate.init_app(app, db)
     bcrypt.init_app(app)
@@ -52,5 +55,6 @@ def create_app(config_name='default'):
         from capstone_depot.oauth import create_google_blueprint
         google_bp = create_google_blueprint()
         app.register_blueprint(google_bp, url_prefix="/login")
+        app.config['OAUTH_PROVIDERS'].append('google')
 
     return app
