@@ -1,71 +1,155 @@
 {% extends "layout.html" %} {% block content %}
 
-<div class="content-section">
-  <form method="POST" action="">
-    {{ form.hidden_tag() }}
-    <fieldset class="form-group">
-      <legend class="border-bottom mb-4">Sign In</legend>
+<div class="container py-5">
+  <div class="row d-flex justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+      <div class="card bg-dark shadow-lg border-0 rounded-lg">
+        <div class="card-body p-5">
+          <h2 class="text-center mb-4 text-light">Welcome Back!</h2>
 
-      <div class="form-group mb-3">
-        {{ form.email.label(class="form-control-label") }} {% if
-        form.email.errors %} {{ form.email(class="form-control form-control-lg
-        is-invalid") }}
-        <div class="invalid-feedback">
-          {% for error in form.email.errors %}
-          <span>{{ error }}</span>
-          {% endfor %}
+          {% if 'google' in config.get('OAUTH_PROVIDERS', []) %}
+          <div class="mb-4">
+            <a
+              href="{{ url_for('google.login') }}"
+              class="btn btn-google w-100 mb-3 position-relative"
+            >
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg"
+                alt="Google Logo"
+                class="google-icon"
+              />
+              Continue with Google
+            </a>
+          </div>
+
+          <div class="text-center mb-4">
+            <div class="divider d-flex align-items-center">
+              <span class="divider-line flex-grow-1"></span>
+              <span class="mx-3 text-muted">or</span>
+              <span class="divider-line flex-grow-1"></span>
+            </div>
+          </div>
+          {% endif %}
+
+          <form method="POST" action="">
+            {{ form.hidden_tag() }}
+
+            <div class="form-group mb-3">
+              {{ form.email.label(class="form-control-label text-light") }} {{
+              form.email(class="form-control form-control-lg bg-dark text-light"
+              + (" is-invalid" if form.email.errors else "")) }} {% if
+              form.email.errors %}
+              <div class="invalid-feedback">
+                {% for error in form.email.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+
+            <div class="form-group mb-3">
+              {{ form.password.label(class="form-control-label text-light") }}
+              {{ form.password(class="form-control form-control-lg bg-dark
+              text-light" + (" is-invalid" if form.password.errors else "")) }}
+              {% if form.password.errors %}
+              <div class="invalid-feedback">
+                {% for error in form.password.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <div class="form-check">
+                {{ form.remember(class="form-check-input") }} {{
+                form.remember.label(class="form-check-label text-light") }}
+              </div>
+              <small>
+                <a
+                  href="{{ url_for('users.reset_request') }}"
+                  class="text-primary"
+                  >Forgot Password?</a
+                >
+              </small>
+            </div>
+
+            {{ form.submit(class="btn btn-primary w-100 py-2") }}
+          </form>
         </div>
-
-        {% else %} {{ form.email(class="form-control form-control-lg") }} {%
-        endif %}
-      </div>
-
-      <div class="form-group mb-3">
-        {{ form.password.label(class="form-control-label") }} {% if
-        form.password.errors %} {{ form.password(class="form-control
-        form-control-lg is-invalid") }}
-        <div class="invalid-feedback">
-          {% for error in form.password.errors %}
-          <span>{{ error }}</span>
-          {% endfor %}
+        <div
+          class="card-footer text-center py-3 bg-dark border-0 rounded-bottom"
+        >
+          <small class="text-muted">
+            Need an account?
+            <a href="{{ url_for('users.register') }}" class="text-primary"
+              >Sign up now</a
+            >
+          </small>
         </div>
-
-        {% else %} {{ form.password(class="form-control form-control-lg") }} {%
-        endif %}
       </div>
-
-      <div class="form-check mb-3">
-        {{ form.remember(class="form-check-input") }} {{
-        form.remember.label(class="form-check-label") }}
-      </div>
-    </fieldset>
-
-    <div class="form-group mb-2">
-      {{ form.submit(class="btn btn-outline-primary") }}
     </div>
-
-    <div class="mb-2">
-      <small class="text-muted">
-        <a href="{{ url_for('users.reset_request') }}"> Forgot Password? </a>
-      </small>
-    </div>
-  </form>
-
-  {% if 'google' in config.get('OAUTH_PROVIDERS', []) %}
-  <div class="border-top pt-3 mb-3">
-    <p class="text-muted">Or sign in with:</p>
-    <a href="{{ url_for('google.login') }}" class="btn btn-danger">
-      <i class="fab fa-google"></i> Sign in with Google
-    </a>
   </div>
-  {% endif %}
 </div>
 
-<div class="border-top pt-3">
-  <small class="text-muted">
-    Need An Account?
-    <a class="ml-2" href="{{ url_for('users.register') }}"> Sign Up Now </a>
-  </small>
-</div>
+<style>
+  .btn-google {
+    background-color: #ffffff;
+    color: #757575;
+    border: 2px solid #4d4d4d;
+    font-weight: 500;
+    font-size: 16px;
+    height: 45px;
+    line-height: 30px;
+    position: relative;
+    text-align: center;
+  }
+
+  .btn-google:hover {
+    background-color: #f8f9fa;
+    border-color: #666666;
+  }
+
+  .google-icon {
+    width: 20px;
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .divider-line {
+    border-top: 1px solid #4d4d4d;
+  }
+
+  .form-control {
+    border: 1px solid #4d4d4d;
+  }
+
+  .form-control:focus {
+    background-color: #2d2d2d;
+    border-color: #666666;
+    color: #ffffff;
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.1);
+  }
+
+  .card {
+    background-color: #1a1a1a;
+  }
+
+  .invalid-feedback {
+    color: #dc3545;
+  }
+
+  .form-check-input {
+    background-color: #2d2d2d;
+    border-color: #4d4d4d;
+  }
+
+  .form-check-input:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+  }
+</style>
 
 {% endblock content %}

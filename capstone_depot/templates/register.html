@@ -1,83 +1,162 @@
 {% extends "layout.html" %} {% block content %}
 
-<div class="content-section">
-  <form method="POST" action="">
-    {{ form.hidden_tag() }}
-    <fieldset class="form-group mb-3">
-      <legend class="border-bottom mb-4">Register Your Account</legend>
-      <div class="form-group mb-3">
-        {{ form.username.label(class="form-control-label") }} {% if
-        form.username.errors %} {{ form.username(class="form-control
-        form-control-lg is-invalid") }}
-        <div class="invalid-feedback">
-          {% for error in form.username.errors %}
-          <span>{{ error }}</span>
-          {% endfor %}
-        </div>
+<div class="container py-5">
+  <div class="row d-flex justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+      <div class="card bg-dark shadow-lg border-0 rounded-lg">
+        <div class="card-body p-5">
+          <h2 class="text-center mb-4 text-light">Create Your Account</h2>
 
-        {% else %} {{ form.username(class="form-control form-control-lg") }} {%
-        endif %}
-      </div>
-      <div class="form-group mb-3">
-        {{ form.email.label(class="form-control-label") }} {% if
-        form.email.errors %} {{ form.email(class="form-control form-control-lg
-        is-invalid") }}
-        <div class="invalid-feedback">
-          {% for error in form.email.errors %}
-          <span>{{ error }}</span>
-          {% endfor %}
-        </div>
+          {% if 'google' in config.get('OAUTH_PROVIDERS', []) %}
+          <div class="mb-4">
+            <a
+              href="{{ url_for('google.login') }}"
+              class="btn btn-google w-100 mb-3 position-relative"
+            >
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg"
+                alt="Google Logo"
+                class="google-icon"
+              />
+              Sign up with Google
+            </a>
+            <p class="text-center text-muted small mb-0">
+              <i class="fas fa-shield-alt me-1"></i>
+              Fastest and most secure way to join
+            </p>
+          </div>
 
-        {% else %} {{ form.email(class="form-control form-control-lg") }} {%
-        endif %}
-      </div>
-      <div class="form-group mb-3">
-        {{ form.password.label(class="form-control-label") }} {% if
-        form.password.errors %} {{ form.password(class="form-control
-        form-control-lg is-invalid") }}
-        <div class="invalid-feedback">
-          {% for error in form.password.errors %}
-          <span>{{ error }}</span>
-          {% endfor %}
-        </div>
+          <div class="text-center mb-4">
+            <div class="divider d-flex align-items-center">
+              <span class="divider-line flex-grow-1"></span>
+              <span class="mx-3 text-muted">or</span>
+              <span class="divider-line flex-grow-1"></span>
+            </div>
+          </div>
+          {% endif %}
 
-        {% else %} {{ form.password(class="form-control form-control-lg") }} {%
-        endif %}
-      </div>
-      <div class="form-group mb-3">
-        {{ form.confirm_password.label(class="form-control-label") }} {% if
-        form.confirm_password.errors %} {{
-        form.confirm_password(class="form-control form-control-lg is-invalid")
-        }}
-        <div class="invalid-feedback">
-          {% for error in form.confirm_password.errors %}
-          <span>{{ error }}</span>
-          {% endfor %}
-        </div>
+          <form method="POST" action="">
+            {{ form.hidden_tag() }}
 
-        {% else %} {{ form.confirm_password(class="form-control
-        form-control-lg") }} {% endif %}
+            <div class="form-group mb-3">
+              {{ form.username.label(class="form-control-label text-light") }}
+              {{ form.username(class="form-control form-control-lg bg-dark
+              text-light" + (" is-invalid" if form.username.errors else "")) }}
+              {% if form.username.errors %}
+              <div class="invalid-feedback">
+                {% for error in form.username.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+
+            <div class="form-group mb-3">
+              {{ form.email.label(class="form-control-label text-light") }} {{
+              form.email(class="form-control form-control-lg bg-dark text-light"
+              + (" is-invalid" if form.email.errors else "")) }} {% if
+              form.email.errors %}
+              <div class="invalid-feedback">
+                {% for error in form.email.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+
+            <div class="form-group mb-3">
+              {{ form.password.label(class="form-control-label text-light") }}
+              {{ form.password(class="form-control form-control-lg bg-dark
+              text-light" + (" is-invalid" if form.password.errors else "")) }}
+              {% if form.password.errors %}
+              <div class="invalid-feedback">
+                {% for error in form.password.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+
+            <div class="form-group mb-4">
+              {{ form.confirm_password.label(class="form-control-label
+              text-light") }} {{ form.confirm_password(class="form-control
+              form-control-lg bg-dark text-light" + (" is-invalid" if
+              form.confirm_password.errors else "")) }} {% if
+              form.confirm_password.errors %}
+              <div class="invalid-feedback">
+                {% for error in form.confirm_password.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+
+            {{ form.submit(class="btn btn-primary w-100 py-2") }}
+          </form>
+        </div>
+        <div
+          class="card-footer text-center py-3 bg-dark border-0 rounded-bottom"
+        >
+          <small class="text-muted">
+            Already have an account?
+            <a href="{{ url_for('users.login') }}" class="text-primary"
+              >Sign in</a
+            >
+          </small>
+        </div>
       </div>
-    </fieldset>
-    <div class="form-group mb-3">
-      {{ form.submit(class="btn btn-outline-primary") }}
     </div>
-  </form>
-
-  {% if 'google' in config.get('OAUTH_PROVIDERS', []) %}
-  <div class="border-top pt-3 mb-3">
-    <p class="text-muted">Or sign up with:</p>
-    <a href="{{ url_for('google.login') }}" class="btn btn-danger">
-      <i class="fab fa-google"></i> Sign up with Google
-    </a>
   </div>
-  {% endif %}
 </div>
-<div class="border-top pt-3">
-  <small class="text-muted">
-    Already Have An Account?
-    <a class="ml-2" href="{{ url_for('users.login') }}"> Sign In </a>
-  </small>
-</div>
+
+<style>
+  .btn-google {
+    background-color: #ffffff;
+    color: #757575;
+    border: 2px solid #4d4d4d;
+    font-weight: 500;
+    font-size: 16px;
+    height: 45px;
+    line-height: 30px;
+    position: relative;
+    text-align: center;
+  }
+
+  .btn-google:hover {
+    background-color: #f8f9fa;
+    border-color: #666666;
+  }
+
+  .google-icon {
+    width: 20px;
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .divider-line {
+    border-top: 1px solid #4d4d4d;
+  }
+
+  .form-control {
+    border: 1px solid #4d4d4d;
+  }
+
+  .form-control:focus {
+    background-color: #2d2d2d;
+    border-color: #666666;
+    color: #ffffff;
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.1);
+  }
+
+  .card {
+    background-color: #1a1a1a;
+  }
+
+  .invalid-feedback {
+    color: #dc3545;
+  }
+</style>
 
 {% endblock content %}
