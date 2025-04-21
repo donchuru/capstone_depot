@@ -13,5 +13,5 @@ def category_posts(category):
         category: The category (Computer Engineering, Electrical Engineering)... to filter the posts against.
     """
     page = request.args.get('page', 1, type=int)
-    category_posts = Post.query.filter_by(category=category).order_by(Post.year.desc()).paginate(page=page, per_page=5)
+    category_posts = Post.query.filter_by(category=category).order_by(Post.year.desc()).paginate(page=page, per_page=10)
     return render_template('home.html',category=category, posts=category_posts, categories=CATEGORIES[1:])
