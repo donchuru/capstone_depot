@@ -6,7 +6,7 @@
             <div class="article-metadata">
                 <a class="mr-2 username" href="{{ url_for('users.user_posts', username=post.author.username) }}">{{ post.author.username }}</a>
 
-                <small class="text-muted"> <i class="fa fa-snowflake-o" aria-hidden="true"></i> {{ post.year }}</small>
+                <small class="text-muted"> <i class="far fa-snowflake" aria-hidden="true"></i> {{ post.year }}</small>
 
                 {% if post.author == current_user %}
                     <div>
@@ -34,11 +34,17 @@
             </div>
 
             <div class="d-flex flex-wrap justify-content-between align-items-center mt-3 mb-3">
-                <h6>Tag:<a href="{{ url_for('categories.category_posts', category=post.category) }} "><span class="badge m-2">{{ post.category }}</span> </a></h6>
+                <h6 class="mr-3">Tag:<a href="{{ url_for('categories.category_posts', category=post.category) }} "><span class="badge m-2">{{ post.category }}</span> </a></h6>
 
                 {% if post.link %}
-                <a class="presentationLink" target="_blank" href="{{ post.link }}">
-                    <h3 class="presentationLink"> <i class="fa fa-youtube-play" aria-hidden="true"></i> Link to Presentation </h2>
+                <a class="social-icon-link" target="_blank" href="{{ post.link }}" style="text-decoration: none; opacity: 0.8;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.8">
+                    {% if post.link.startswith('https://github.com') %}
+                        <i class="fab fa-github fa-3x" aria-hidden="true" style="color: white;"></i>
+                    {% elif post.link.startswith('https://www.youtube.com') or post.link.startswith('https://youtube.com') or post.link.startswith('https://youtu.be') %}
+                        <i class="fab fa-youtube fa-3x" aria-hidden="true" style="color: white;"></i>
+                    {% else %}
+                         <i class="fas fa-link fa-3x" aria-hidden="true" style="color: white;"></i> <!-- Optional: Fallback icon -->
+                    {% endif %}
                 </a>
                 {% endif %}
             </div>
