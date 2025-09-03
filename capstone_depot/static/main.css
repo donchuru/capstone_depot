@@ -28,7 +28,7 @@ font-weight: 500;
 .content-section {
 background: transparent;
 padding: 10px 20px;
-border: 1px solid #dddddd;
+border: 1px solid #2a2a2a;
 border-radius: 3px;
 margin-bottom: 20px;
 }
@@ -123,8 +123,44 @@ background-color: transparent;
 color: white;
 }
 
+.form-control::placeholder {
+color: #9aa0a6;
+}
+
+/* Modern dark-mode select styling */
+.form-select {
+background-color: #1e1e1e;
+color: white;
+border-color: #2e2e2e;
+}
+
+.form-select:focus {
+background-color: #1e1e1e;
+color: white;
+border-color: rgb(0, 181, 181);
+box-shadow: 0 0 0 0.25rem rgba(0, 181, 181, 0.25);
+}
+
 .form-control-textarea {
 height: 300px; /* Adjust the height as desired */
+}
+
+/* File input polish */
+.form-control[type=file] {
+background-color: transparent;
+color: white;
+border-color: #2e2e2e;
+}
+
+.form-control[type=file]::file-selector-button {
+color: white;
+background-color: #2b2b2b;
+border: 1px solid #3a3a3a;
+}
+
+.form-control[type=file]::file-selector-button:hover {
+background-color: #3a3a3a;
+border-color: rgb(0, 181, 181);
 }
 
 .dropdown-menu-dark{
