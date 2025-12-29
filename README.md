@@ -1,6 +1,9 @@
 # Capstone Depot
 Online repository for uAlberta students to post their capstone projects and posters.
 
+Screenshot of web app:
+<img width="2940" height="18986" alt="screencapture-capstonedepot-live-2025-12-28-22_57_04 (1)" src="https://github.com/user-attachments/assets/e4aef9c2-9011-4f98-8908-1678067dd59e" />
+
 ## Local Development Setup
 1. Clone the repository:
    ```
